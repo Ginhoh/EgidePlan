@@ -1,7 +1,7 @@
 #Colocar tabelas referentes ao mês
 #DashBoard estatístico
 from openpyxl import load_workbook
-
+from datetime import date
 
 tabela = load_workbook('total_de_gastos.xlsx')
 main_page = tabela['Sheet']
@@ -20,6 +20,7 @@ while True:
 
 if escolha == 1:
     valores = 0 
+    data = date.today().strftime('%d/%m/%Y')
     for linha in range(2, main_page.max_row+1):
         valorA = main_page[f'A{linha}'].value
         valorB = main_page[f'B{linha}'].value
