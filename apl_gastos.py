@@ -8,7 +8,7 @@ main_page = tabela['Sheet']
 
 
 
-main_page.delete_rows(10)# - Serve para apagar linhas
+#main_page.delete_rows(10)# - Serve para apagar linhas
 while True:
     escolha = int(input('''Escolha uma opção: 
     [1] Ver total de gastos
@@ -18,7 +18,7 @@ while True:
     if escolha == 1 or escolha == 2:
         break
     print('Comando não reconhecido, insira um comando válido')
-main_page[f'D1'].value = 'Data'
+
 if escolha == 1:
     valores = 0 
     for linha in range(2, main_page.max_row+1):
@@ -44,7 +44,7 @@ if escolha == 2:
         main_page[f'C{ultima_celula}'].value = criterio
         data = date.today().strftime('%d/%m/%Y')
         main_page[f'D{ultima_celula}'].value = data
-    except:
+    except ValueError or IndexError or KeyError:
         print('Houve um erro no envio das informações. Revise o que foi pedido e tente novamente.')
     finally:
         print('Item adicionado com sucesso!')
