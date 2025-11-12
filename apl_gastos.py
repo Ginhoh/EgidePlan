@@ -2,10 +2,14 @@
 #DashBoard estatístico
 from openpyxl import load_workbook
 from datetime import date
+from funcoes import mes_atual
+from time import sleep
 
 tabela = load_workbook('total_de_gastos.xlsx')
 main_page = tabela['Sheet']
 
+if 'Sheet2' not in tabela.sheetnames:
+    print(tabela.sheetnames,'123') #Exibe quais abas o arquivo tem
 
 
 #main_page.delete_rows(10)# - Serve para apagar linhas
@@ -22,10 +26,11 @@ while True:
 if escolha == 1:
     valores = 0 
     for linha in range(2, main_page.max_row+1):
+        sleep(0.5)
         valorA = main_page[f'A{linha}'].value
         valorB = main_page[f'B{linha}'].value
         valorC = main_page[f'C{linha}'].value
-        print(f'{valorA} -> R${valorB} ({valorC})')
+        print(f'{valorA}: R${valorB} ({valorC})')
         num = float(valorB)
         valores += num
     print(f'\n\n\nValor gasto total: R${valores:.2f}')
