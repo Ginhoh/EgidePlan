@@ -25,4 +25,9 @@ def mes_atual():
     elif mes == 12: return 'Dezembro'
 
 
+def verificarAba(tabela, nomeAba):
+    if nomeAba in tabela.sheetnames:
+        return True
+    else:
+        tabela.create_sheet(nomeAba)
 print(mes_atual())

@@ -2,14 +2,13 @@
 #DashBoard estatístico
 from openpyxl import load_workbook
 from datetime import date
-from funcoes import mes_atual
+from funcoes import *
 from time import sleep
 
 tabela = load_workbook('total_de_gastos.xlsx')
 main_page = tabela['Sheet']
 
-if 'Sheet2' not in tabela.sheetnames:
-    print(tabela.sheetnames,'123') #Exibe quais abas o arquivo tem
+verificarAba(tabela, mes_atual())
 
 
 #main_page.delete_rows(10)# - Serve para apagar linhas
@@ -19,7 +18,7 @@ while True:
     [2] Adicionar gastos
                         
     -> '''))
-    if escolha == 1 or escolha == 2:
+    if escolha == 1 or escolha == 2 or escolha == 3:
         break
     print('Comando não reconhecido, insira um comando válido')
 
@@ -54,6 +53,9 @@ if escolha == 2:
     finally:
         print('Item adicionado com sucesso!')
     #Se salvar com um nome diferente, ele cria um arquivo
+
+if escolha == 3:
+    print(tabela.sheetnames)
 
 
 tabela.save('total_de_gastos.xlsx')
