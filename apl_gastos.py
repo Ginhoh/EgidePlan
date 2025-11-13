@@ -6,7 +6,8 @@ from funcoes import *
 from time import sleep
 
 tabela = load_workbook('total_de_gastos.xlsx')
-main_page = tabela['Sheet']
+main_page = tabela[mes_atual()]
+
 
 verificarAba(tabela, mes_atual())
 
@@ -39,15 +40,16 @@ if escolha == 1:
 
 if escolha == 2:
     try:
-        ultima_celula = main_page.max_row + 1
+        lastCell = main_page.max_row + 1
+
         descricao = input('Título do Gasto: ')
-        main_page[f'A{ultima_celula}'].value = descricao
+        main_page[f'A{lastCell}'].value = descricao
         real = input('Valor (Utilize . para as casas decimais.): R$')
-        main_page[f'B{ultima_celula}'].value = real
+        main_page[f'B{lastCell}'].value = real
         criterio = input('Grau de importância: ')
-        main_page[f'C{ultima_celula}'].value = criterio
-        data = date.today().strftime('%d/%m/%Y')
-        main_page[f'D{ultima_celula}'].value = data
+        main_page[f'C{lastCell}'].value = criterio
+        today = date.today().strftime('%d/%m/%Y')
+        main_page[f'D{lastCell}'].value = today
     except ValueError or IndexError or KeyError:
         print('Houve um erro no envio das informações. Revise o que foi pedido e tente novamente.')
     finally:

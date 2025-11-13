@@ -26,8 +26,15 @@ def mes_atual():
 
 
 def verificarAba(tabela, nomeAba):
-    if nomeAba in tabela.sheetnames:
-        return True
-    else:
+    if nomeAba not in tabela.sheetnames:
         tabela.create_sheet(nomeAba)
-print(mes_atual())
+
+        tabela[nomeAba]['A1'].value = 'Descrição'
+        tabela[nomeAba]['B1'].value = 'Valor'
+        tabela[nomeAba]['C1'].value = 'Tipo de gasto'
+        tabela[nomeAba]['D1'].value = 'Data'
+    if 'Sheet' in tabela.sheetnames:
+        tabela.remove(tabela['Sheet'])
+
+        
+
