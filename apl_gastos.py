@@ -1,4 +1,3 @@
-#Colocar tabelas referentes ao mês
 #DashBoard estatístico
 from openpyxl import load_workbook
 from datetime import date
@@ -35,8 +34,6 @@ if escolha == 1:
         valores += num
     print(f'\n\n\nValor gasto total: R${valores:.2f}')
     
-   # valores += float(lista[cont])
-   # print(f'Total de gastos: R${valores:.2f}')
 
 if escolha == 2:
     try:
@@ -61,7 +58,7 @@ if escolha == 3:
 
 
 tabela.save('total_de_gastos.xlsx')
-main_page.max_column #Ver o máximo de colunas
-main_page.max_row #Ver o máximo de linhas
+#main_page.max_column #Ver o máximo de colunas
+#main_page.max_row #Ver o máximo de linhas
 
 #main_page['A1'].value é possível exibir e alterar o valor de uma célulam
