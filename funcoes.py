@@ -35,6 +35,3 @@ def verificarAba(tabela, nomeAba):
         tabela[nomeAba]['D1'].value = 'Data'
     if 'Sheet' in tabela.sheetnames:
         tabela.remove(tabela['Sheet'])
-
-        
-
