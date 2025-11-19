@@ -1,5 +1,5 @@
 from openpyxl import workbook, load_workbook
-
+import customtkinter as ctk
 #criar_abas():
 def excluir_dados_completos(nomeTabela, nomePg):
     tabela = nomeTabela
