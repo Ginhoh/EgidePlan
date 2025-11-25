@@ -11,7 +11,7 @@ main_page = tabela[mes_atual()]
 verificarAba(tabela, mes_atual())
 
 
-main_page.delete_rows(7,9)# - Serve para apagar linhas
+#main_page.delete_rows(7,9)# - Serve para apagar linhas
 while True:
     escolha = int(input('''Escolha uma opção: 
     [1] Ver total de gastos

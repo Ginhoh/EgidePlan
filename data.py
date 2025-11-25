@@ -17,16 +17,21 @@ verificarAba(tabela, mes_atual())
 #main_page.delete_rows(6)# - Serve para apagar linhas
 def exibir_tabela(position):
     try:
-        valores = cont = 0 
+        valores = 0
+        cont = 1 
         px = 50
-        new_frame = ctk.CTkFrame(position, width=600, height=400, fg_color='#F3F4F6',border_color='#E5E7EB', border_width=2).place(x=200)
+        new_frame = ctk.CTkFrame(position, width=600, height=400, fg_color='#F3F4F6', border_width=2)
+        new_frame.place(x=200)
+        table_frame = ctk.CTkScrollableFrame(new_frame, width=560, height=420, fg_color='#F3F4F6')
+        table_frame.place(x=20, y=60)
+        labelGastos = ctk.CTkLabel(new_frame, justify='center', width=600, text="Confira seus gastos aqui", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
         for linha in range(2, main_page.max_row+1):
             sleep(0.5)
             valorA = main_page[f'A{linha}'].value
-            valorB = main_page[f'B{linha}'].value
+            valorB = float(main_page[f'B{linha}'].value)
             valorC = main_page[f'C{linha}'].value
             valorD = main_page[f'D{linha}'].value
-            new_label = ctk.CTkLabel(new_frame, text=f'{valorA}: R${valorB} ({valorC}) {valorD}', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='#4A6D7C').place(x=240,y=px)
+            new_label = ctk.CTkLabel(new_frame, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='#4A6D7C').place(x=240,y=px)
             num = float(valorB)
             valores += num
             cont += 1
@@ -34,7 +39,7 @@ def exibir_tabela(position):
     except:
         new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
     finally:   
-        total_label = ctk.CTkLabel(new_frame, text=f'Foram exibidos {cont} itens.\nValor gasto total: R${valores:.2f}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='black').place(x=240,y=px+40)
+        total_label = ctk.CTkLabel(new_frame, text=f'Foram exibidos {cont-1} itens.\nValor gasto total: R${valores:.2f}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='black').place(x=240,y=px+40)
         
     
 
@@ -57,13 +62,9 @@ def addGasto(motherWindow):
         except ValueError or IndexError or KeyError:
             print('Houve um erro no envio das informações. Revise o que foi pedido e tente novamente.')
         finally:
-            descricaoEntry.delete(0, 'end') #Limpa o campo após o envio
-            valorEntry.delete(0, 'end')
-            criterioEntry.delete(0, 'end')
-            motherWindow.update()
             exibir_tabela(motherWindow)
-            AddWindow.destroy()
             tabela.save('total_de_gastos.xlsx')
+            AddWindow.destroy()
             
         
     try:
@@ -72,7 +73,7 @@ def addGasto(motherWindow):
         AddWindow.title("Adicionar Gasto")
         AddWindow.resizable(False, False)
         AddWindow.iconbitmap("assents/logo.ico") #Coloca o ícone da aplicação
-        AddWindow.transient(motherWindow)
+        AddWindow.transient(motherWindow) # vincula a janela filha à janela mãe
         AddWindow.grab_set()# impede interação com a janela mãe
         AddWindow.lift()# traz a janela para frente
 
@@ -99,9 +100,21 @@ def addGasto(motherWindow):
         btnSubmit = ctk.CTkButton(AddWindow, command=submitGasto, width=150, text="Enviar", fg_color=('#1E3A8A'),text_color='black', border_color='black', border_width=2).place(x=125,y=300)
 
         
-
-    #Se salvar com um nome diferente, ele cria um arquivo
-
+def removeGasto(motherWindow):
+    dialogWindow = ctk.CTkInputDialog(motherWindow,text='Digite qual gasto deseja remover: ')
+    dialogWindow.geometry("400x200")
+    dialogWindow.title("Remover Gasto")
+    value_to_remove = dialogWindow.get_input()
+    if value_to_remove is None:
+        return
+    value_to_remove = value_to_remove.strip()
+    if value_to_remove == '':
+        return
+    if value_to_remove != '':
+        main_page.delete_rows(int(value_to_remove)+1)
+        tabela.save('total_de_gastos.xlsx')
+        exibir_tabela(motherWindow)
+     
 #main_page.max_column #Ver o máximo de colunas
 #main_page.max_row #Ver o máximo de linhas
 
