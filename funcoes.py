@@ -38,3 +38,16 @@ def verificarAba(tabela, nomeAba):
 
 def limpar_frame(frame):
     print(frame)
+
+
+
+def first(tabela):
+    cont = 0
+    for aba in tabela.sheetnames:
+        cont += 1
+    if cont == 1:
+        return True
+    else:
+        return False  
+    
+

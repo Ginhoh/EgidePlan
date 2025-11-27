@@ -20,10 +20,9 @@ def exibir_tabela(position):
         valores = 0
         cont = 1 
         px = 50
-        new_frame = ctk.CTkFrame(position, width=600, height=400, fg_color='#F3F4F6', border_width=2)
-        new_frame.place(x=200)
-        table_frame = ctk.CTkScrollableFrame(new_frame, width=560, height=420, fg_color='#F3F4F6')
-        table_frame.place(x=20, y=60)
+        new_frame = ctk.CTkFrame(position, width=600, height=400, fg_color='#F3F4F6', border_width=2, border_color='#E5E7EB').place(x=200)
+       # table_frame = ctk.CTkScrollableFrame(new_frame, fg_color='#F3F4F6')
+        #table_frame.place(x=20, y=60)
         labelGastos = ctk.CTkLabel(new_frame, justify='center', width=600, text="Confira seus gastos aqui", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
         for linha in range(2, main_page.max_row+1):
             sleep(0.5)
@@ -31,7 +30,7 @@ def exibir_tabela(position):
             valorB = float(main_page[f'B{linha}'].value)
             valorC = main_page[f'C{linha}'].value
             valorD = main_page[f'D{linha}'].value
-            new_label = ctk.CTkLabel(new_frame, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='#4A6D7C').place(x=240,y=px)
+            new_label = ctk.CTkLabel(new_frame, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#4A6D7C').place(x=240,y=px)
             num = float(valorB)
             valores += num
             cont += 1
@@ -52,7 +51,7 @@ def addGasto(motherWindow):
 
             main_page[f'B{lastCell}'].value = valorEntry.get()
 
-            main_page[f'C{lastCell}'].value =  criterioEntry.get()
+            main_page[f'C{lastCell}'].value =  ctg_select.get()
 
             today = date.today().strftime('%d/%m/%Y')
 
@@ -79,16 +78,19 @@ def addGasto(motherWindow):
 
         labelInfo = ctk.CTkLabel(AddWindow, text="Preencha as informações do gasto abaixo:",width=400, justify='center', font=ctk.CTkFont(size=16, weight="bold"), text_color='#1E3A8A').place(x=0,y=20)
 
-        descricaoEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Título do Gasto")
+        descricaoEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Título do Gasto",fg_color="#3d3d3d", text_color='#E5E7EB')
         descricaoEntry.place(x=50,y=80)
         
 
-        valorEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Valor (Utilize . para as casas decimais.)")
+        valorEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Valor (Utilize . para as casas decimais.)",fg_color="#3d3d3d", text_color='#E5E7EB')
         valorEntry.place(x=50,y=140)
         
 
-        criterioEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Grau de importância")
-        criterioEntry.place(x=50,y=200)
+        #criterioEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Grau de importância")
+        ctg_select = ctk.CTkOptionMenu(AddWindow, width=300,fg_color="#3d3d3d", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#E5E7EB', button_color='#3d3d3d', button_hover_color='#575757',
+            values=["Essencial", "Lazer", "Mercado", "Lanches", "Transporte", "Auto Cuidado"])
+        ctg_select.set("Selecione a categoria")
+        ctg_select.place(x=50,y=200)
         
 
  
@@ -97,13 +99,14 @@ def addGasto(motherWindow):
 
 
     finally:
-        btnSubmit = ctk.CTkButton(AddWindow, command=submitGasto, width=150, text="Enviar", fg_color=('#1E3A8A'),text_color='black', border_color='black', border_width=2).place(x=125,y=300)
+        btnSubmit = ctk.CTkButton(AddWindow, command=submitGasto, width=150, text="Enviar", fg_color=('#3B82F6'), hover_color='#1E3A8A',text_color='black', border_color='black', border_width=2).place(x=125,y=300)
 
         
 def removeGasto(motherWindow):
     dialogWindow = ctk.CTkInputDialog(motherWindow,text='Digite qual gasto deseja remover: ')
     dialogWindow.geometry("400x200")
     dialogWindow.title("Remover Gasto")
+    dialogWindow.iconbitmap("assents/logo.ico") #Coloca o ícone da aplicação
     value_to_remove = dialogWindow.get_input()
     if value_to_remove is None:
         return

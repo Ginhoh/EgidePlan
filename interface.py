@@ -5,8 +5,8 @@ def gastos():
 
     exibir_tabela(frameCentral)
     #labelGastos = ctk.CTkLabel(frameCentral, justify='center', width=600, text="Aqui é a área de gastos", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
-    btnAdd = ctk.CTkButton(frameCentral,command=lambda:addGasto(frameCentral), width=150, text="Adicionar Gasto", fg_color=('#F3F4F6'),text_color='black', border_color='black', border_width=2).place(x=325,y=500)
-    btnRemove = ctk.CTkButton(frameCentral,command=lambda:removeGasto(frameCentral), width=150, text="Remover Gasto", fg_color=('#F3F4F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
+    btnAdd = ctk.CTkButton(frameCentral,command=lambda:addGasto(frameCentral), width=150, text="Adicionar Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=325,y=500)
+    btnRemove = ctk.CTkButton(frameCentral,command=lambda:removeGasto(frameCentral), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
 
 def dashboard():
  
