@@ -8,10 +8,10 @@ import customtkinter as ctk
 
 
 tabela = load_workbook('total_de_gastos.xlsx')
+verificarAba(tabela, mes_atual())
 main_page = tabela[mes_atual()]
 
 
-verificarAba(tabela, mes_atual())
 
 
 #main_page.delete_rows(6)# - Serve para apagar linhas
@@ -30,7 +30,7 @@ def exibir_tabela(position):
             valorB = float(main_page[f'B{linha}'].value)
             valorC = main_page[f'C{linha}'].value
             valorD = main_page[f'D{linha}'].value
-            new_label = ctk.CTkLabel(new_frame, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#4A6D7C').place(x=240,y=px)
+            new_label = ctk.CTkLabel(new_frame, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=240,y=px)
             num = float(valorB)
             valores += num
             cont += 1
@@ -38,7 +38,7 @@ def exibir_tabela(position):
     except:
         new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
     finally:   
-        total_label = ctk.CTkLabel(new_frame, text=f'Foram exibidos {cont-1} itens.\nValor gasto total: R${valores:.2f}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='black').place(x=240,y=px+40)
+        total_label = ctk.CTkLabel(new_frame, text=f'Foram exibidos {cont-1} itens.\nValor gasto total: R${valores:.2f}',width=600, justify='center', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='black').place(x=200,y=px+40)
         
     
 
@@ -88,7 +88,7 @@ def addGasto(motherWindow):
 
         #criterioEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Grau de importância")
         ctg_select = ctk.CTkOptionMenu(AddWindow, width=300,fg_color="#3d3d3d", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#E5E7EB', button_color='#3d3d3d', button_hover_color='#575757',
-            values=["Essencial", "Lazer", "Mercado", "Lanches", "Transporte", "Auto Cuidado"])
+            values=["Essencial", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
         ctg_select.set("Selecione a categoria")
         ctg_select.place(x=50,y=200)
         

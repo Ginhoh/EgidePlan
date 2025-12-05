@@ -1,5 +1,6 @@
 from openpyxl import workbook, load_workbook
 import customtkinter as ctk
+
 #criar_abas():
 def excluir_dados_completos(nomeTabela, nomePg):
     tabela = nomeTabela
@@ -50,4 +51,14 @@ def first(tabela):
     else:
         return False  
     
+
+def gastos_total(tabela):
+    total = 0
+    for linha in range(2, tabela.max_row+1):
+        total += float(tabela[f'B{linha}'].value)
+    return total
+
+
+def gastos_media(tabela):
+    return (gastos_total(tabela)) / (tabela.max_row-1)
 
