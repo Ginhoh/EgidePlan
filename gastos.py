@@ -1,8 +1,6 @@
-#DashBoard estatístico
 from openpyxl import load_workbook
 from datetime import date
 from funcoes import *
-from time import sleep
 import customtkinter as ctk
 
 
@@ -12,33 +10,33 @@ verificarAba(tabela, mes_atual())
 main_page = tabela[mes_atual()]
 
 
-
-
-#main_page.delete_rows(6)# - Serve para apagar linhas
 def exibir_tabela(position):
     try:
         valores = 0
         cont = 1 
         px = 50
-        new_frame = ctk.CTkFrame(position, width=600, height=400, fg_color='#F3F4F6', border_width=2, border_color='#E5E7EB').place(x=200)
+       # scrollabel_frame = ctk.CTkScrollableFrame(position, orientation='vertical').place(x=200)
+
+        new_frame = ctk.CTkFrame(position, width=600, height=600, fg_color='#F3F4F6', border_width=2, border_color='#E5E7EB').place(x=200)
        # table_frame = ctk.CTkScrollableFrame(new_frame, fg_color='#F3F4F6')
         #table_frame.place(x=20, y=60)
         labelGastos = ctk.CTkLabel(new_frame, justify='center', width=600, text="Confira seus gastos aqui", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
         for linha in range(2, main_page.max_row+1):
-            sleep(0.5)
             valorA = main_page[f'A{linha}'].value
             valorB = float(main_page[f'B{linha}'].value)
             valorC = main_page[f'C{linha}'].value
             valorD = main_page[f'D{linha}'].value
-            new_label = ctk.CTkLabel(new_frame, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=240,y=px)
+            new_label = ctk.CTkLabel(new_frame, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A', width=460, anchor='w').place(x=240,y=px)
             num = float(valorB)
             valores += num
             cont += 1
             px += 30
+            btnAdd = ctk.CTkButton(position,command=lambda:addGasto(position), width=150, text="Adicionar Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=325,y=500)
+            btnRemove = ctk.CTkButton(position,command=lambda:removeGasto(position), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
     except:
         new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
     finally:   
-        total_label = ctk.CTkLabel(new_frame, text=f'Foram exibidos {cont-1} itens.\nValor gasto total: R${valores:.2f}',width=600, justify='center', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='black').place(x=200,y=px+40)
+        pass
         
     
 
@@ -99,11 +97,11 @@ def addGasto(motherWindow):
 
 
     finally:
-        btnSubmit = ctk.CTkButton(AddWindow, command=submitGasto, width=150, text="Enviar", fg_color=('#3B82F6'), hover_color='#1E3A8A',text_color='black', border_color='black', border_width=2).place(x=125,y=300)
+        btnSubmit = ctk.CTkButton(AddWindow, command=submitGasto, width=150, text="Enviar",text_color='#F3F4F6', fg_color=('#1E3A8A'), hover_color='#3B82F6', border_color='black', border_width=2).place(x=125,y=300)
 
         
 def removeGasto(motherWindow):
-    dialogWindow = ctk.CTkInputDialog(motherWindow,text='Digite qual gasto deseja remover: ')
+    dialogWindow = ctk.CTkInputDialog(motherWindow,text='Digite qual gasto deseja remover: ', button_fg_color='#1E3A8A', button_hover_color='#3B82F6')
     dialogWindow.geometry("400x200")
     dialogWindow.title("Remover Gasto")
     dialogWindow.iconbitmap("assents/logo.ico") #Coloca o ícone da aplicação

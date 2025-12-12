@@ -1,7 +1,6 @@
 from openpyxl import workbook, load_workbook
 import customtkinter as ctk
 
-#criar_abas():
 def excluir_dados_completos(nomeTabela, nomePg):
     tabela = nomeTabela
     pagina = nomePg
@@ -26,6 +25,7 @@ def mes_atual():
     elif mes == 12: return 'Dezembro'
 
 
+#criar_abas():
 def verificarAba(tabela, nomeAba):
     if nomeAba not in tabela.sheetnames:
         tabela.create_sheet(nomeAba)
@@ -38,7 +38,8 @@ def verificarAba(tabela, nomeAba):
         tabela.remove(tabela['Sheet'])
 
 def limpar_frame(frame):
-    print(frame)
+    for widget in frame.winfo_children():
+        widget.destroy()
 
 
 
@@ -52,13 +53,4 @@ def first(tabela):
         return False  
     
 
-def gastos_total(tabela):
-    total = 0
-    for linha in range(2, tabela.max_row+1):
-        total += float(tabela[f'B{linha}'].value)
-    return total
-
-
-def gastos_media(tabela):
-    return (gastos_total(tabela)) / (tabela.max_row-1)
 
