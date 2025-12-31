@@ -12,32 +12,30 @@ main_page = tabela[mes_atual()]
 
 def exibir_tabela(position):
     try:
-        valores = 0
         cont = 1 
         px = 50
-       # scrollabel_frame = ctk.CTkScrollableFrame(position, orientation='vertical').place(x=200)
-
         new_frame = ctk.CTkFrame(position, width=600, height=600, fg_color='#F3F4F6', border_width=2, border_color='#E5E7EB').place(x=200)
-       # table_frame = ctk.CTkScrollableFrame(new_frame, fg_color='#F3F4F6')
-        #table_frame.place(x=20, y=60)
-        labelGastos = ctk.CTkLabel(new_frame, justify='center', width=600, text="Confira seus gastos aqui", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
+        scroll_table = ctk.CTkScrollableFrame(new_frame, width=550, height=400, fg_color='#F3F4F6')
+        scroll_table.place(x=230,y=50)
+        
+        labelGastos = ctk.CTkLabel(position, justify='center', width=600, text="Confira seus gastos aqui", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
         for linha in range(2, main_page.max_row+1):
             valorA = main_page[f'A{linha}'].value
             valorB = float(main_page[f'B{linha}'].value)
             valorC = main_page[f'C{linha}'].value
             valorD = main_page[f'D{linha}'].value
-            new_label = ctk.CTkLabel(new_frame, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A', width=460, anchor='w').place(x=240,y=px)
+            new_label = ctk.CTkLabel(scroll_table, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A', width=460, anchor='w',)
+            new_label.pack(fill='x', pady=5)
             num = float(valorB)
-            valores += num
+
             cont += 1
             px += 30
-            btnAdd = ctk.CTkButton(position,command=lambda:addGasto(position), width=150, text="Adicionar Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=325,y=500)
-            btnRemove = ctk.CTkButton(position,command=lambda:removeGasto(position), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
+        btnAdd = ctk.CTkButton(position,command=lambda:addGasto(position), width=150, text="Adicionar Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=325,y=500)
+        btnRemove = ctk.CTkButton(position,command=lambda:removeGasto(position), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
     except:
         new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
     finally:   
-        pass
-        
+        pass     
     
 
 
@@ -76,16 +74,16 @@ def addGasto(motherWindow):
 
         labelInfo = ctk.CTkLabel(AddWindow, text="Preencha as informações do gasto abaixo:",width=400, justify='center', font=ctk.CTkFont(size=16, weight="bold"), text_color='#1E3A8A').place(x=0,y=20)
 
-        descricaoEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Título do Gasto",fg_color="#3d3d3d", text_color='#E5E7EB')
+        descricaoEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Título do Gasto",fg_color="#E5E7EB", text_color='#3d3d3d')
         descricaoEntry.place(x=50,y=80)
         
 
-        valorEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Valor (Utilize . para as casas decimais.)",fg_color="#3d3d3d", text_color='#E5E7EB')
+        valorEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Valor (Utilize . para as casas decimais.)",fg_color="#E5E7EB", text_color='#3d3d3d')
         valorEntry.place(x=50,y=140)
         
 
         #criterioEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Grau de importância")
-        ctg_select = ctk.CTkOptionMenu(AddWindow, width=300,fg_color="#3d3d3d", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#E5E7EB', button_color='#3d3d3d', button_hover_color='#575757',
+        ctg_select = ctk.CTkOptionMenu(AddWindow, width=300,fg_color="#E5E7EB", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#3d3d3d', button_color='#E5E7EB', button_hover_color='#575757',
             values=["Essencial", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
         ctg_select.set("Selecione a categoria")
         ctg_select.place(x=50,y=200)
@@ -115,8 +113,3 @@ def removeGasto(motherWindow):
         main_page.delete_rows(int(value_to_remove)+1)
         tabela.save('total_de_gastos.xlsx')
         exibir_tabela(motherWindow)
-     
-#main_page.max_column #Ver o máximo de colunas
-#main_page.max_row #Ver o máximo de linhas
-
-#main_page['A1'].value é possível exibir e alterar o valor de uma célulam

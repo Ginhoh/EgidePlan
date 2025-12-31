@@ -1,4 +1,6 @@
-#DashBoard estatístico
+#VERSÃO APENAS PARA TERMINAL
+
+
 from openpyxl import load_workbook
 from datetime import date
 from funcoes import *
@@ -11,7 +13,6 @@ main_page = tabela[mes_atual()]
 verificarAba(tabela, mes_atual())
 
 
-#main_page.delete_rows(7,9)# - Serve para apagar linhas
 while True:
     escolha = int(input('''Escolha uma opção: 
     [1] Ver total de gastos
@@ -52,14 +53,10 @@ if escolha == 2:
         print('Houve um erro no envio das informações. Revise o que foi pedido e tente novamente.')
     finally:
         print('Item adicionado com sucesso!')
-    #Se salvar com um nome diferente, ele cria um arquivo
+
 
 if escolha == 3:
     print(tabela.sheetnames)
 
 
 tabela.save('total_de_gastos.xlsx')
-#main_page.max_column #Ver o máximo de colunas
-#main_page.max_row #Ver o máximo de linhas
-
-#main_page['A1'].value é possível exibir e alterar o valor de uma célulam
