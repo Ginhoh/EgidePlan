@@ -1,14 +1,7 @@
 from openpyxl import workbook, load_workbook
 import customtkinter as ctk
-
-def excluir_dados_completos(nomeTabela, nomePg):
-    tabela = nomeTabela
-    pagina = nomePg
-    for linha in pagina.iter_rows(values_only=True):
-        pagina.delete_rows(linha)
-
         
-def mes_atual():
+def actual_month():
     from datetime import date
     mes = date.today().month
     if mes == 1: return 'Janeiro'
@@ -26,21 +19,16 @@ def mes_atual():
 
 
 #criar_abas():
-def verificarAba(tabela, nomeAba):
-    if nomeAba not in tabela.sheetnames:
-        tabela.create_sheet(nomeAba)
+def verify_sheet(table, nameAba):
+    if nameAba not in table.sheetnames:
+        table.create_sheet(nameAba)
 
-        tabela[nomeAba]['A1'].value = 'Descrição'
-        tabela[nomeAba]['B1'].value = 'Valor'
-        tabela[nomeAba]['C1'].value = 'Tipo de gasto'
-        tabela[nomeAba]['D1'].value = 'Data'
-    if 'Sheet' in tabela.sheetnames:
-        tabela.remove(tabela['Sheet'])
-
-def limpar_frame(frame):
-    for widget in frame.winfo_children():
-        widget.destroy()
-
+        table[nameAba]['A1'].value = 'Descrição'
+        table[nameAba]['B1'].value = 'Valor'
+        table[nameAba]['C1'].value = 'Tipo de gasto'
+        table[nameAba]['D1'].value = 'Data'
+    if 'Sheet' in table.sheetnames:
+        table.remove(table['Sheet'])
 
 
 def first(tabela):

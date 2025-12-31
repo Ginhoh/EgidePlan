@@ -4,8 +4,8 @@ import customtkinter as ctk
 
 def exibir_dashboard(position): 
     tabela = load_workbook('total_de_gastos.xlsx')
-    verificarAba(tabela, mes_atual())
-    main_page = tabela[mes_atual()]
+    verify_sheet(tabela, actual_month())
+    main_page = tabela[actual_month()]
 
     def gastos_total(planilha):
         total = 0

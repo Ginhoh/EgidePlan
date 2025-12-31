@@ -7,10 +7,10 @@ from funcoes import *
 from time import sleep
 
 tabela = load_workbook('total_de_gastos.xlsx')
-main_page = tabela[mes_atual()]
+main_page = tabela[actual_month()]
 
 
-verificarAba(tabela, mes_atual())
+verify_sheet(tabela, actual_month())
 
 
 while True:

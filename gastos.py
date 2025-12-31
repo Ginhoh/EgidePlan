@@ -5,12 +5,12 @@ import customtkinter as ctk
 
 
 
-tabela = load_workbook('total_de_gastos.xlsx')
-verificarAba(tabela, mes_atual())
-main_page = tabela[mes_atual()]
+table = load_workbook('total_de_gastos.xlsx')
+verify_sheet(table, actual_month())
+main_page = table[actual_month()]
 
 
-def exibir_tabela(position):
+def show_table(position):
     try:
         cont = 1 
         px = 50
@@ -31,7 +31,7 @@ def exibir_tabela(position):
             cont += 1
             px += 30
         btnAdd = ctk.CTkButton(position,command=lambda:addGasto(position), width=150, text="Adicionar Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=325,y=500)
-        btnRemove = ctk.CTkButton(position,command=lambda:removeGasto(position), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
+        btnRemove = ctk.CTkButton(position,command=lambda:remove_gasto(position), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
     except:
         new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
     finally:   
@@ -57,8 +57,8 @@ def addGasto(motherWindow):
         except ValueError or IndexError or KeyError:
             print('Houve um erro no envio das informações. Revise o que foi pedido e tente novamente.')
         finally:
-            exibir_tabela(motherWindow)
-            tabela.save('total_de_gastos.xlsx')
+            show_table(motherWindow)
+            table.save('total_de_gastos.xlsx')
             AddWindow.destroy()
             
         
@@ -82,7 +82,7 @@ def addGasto(motherWindow):
         valorEntry.place(x=50,y=140)
         
 
-        #criterioEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Grau de importância")
+
         ctg_select = ctk.CTkOptionMenu(AddWindow, width=300,fg_color="#E5E7EB", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#3d3d3d', button_color='#E5E7EB', button_hover_color='#575757',
             values=["Essencial", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
         ctg_select.set("Selecione a categoria")
@@ -98,7 +98,7 @@ def addGasto(motherWindow):
         btnSubmit = ctk.CTkButton(AddWindow, command=submitGasto, width=150, text="Enviar",text_color='#F3F4F6', fg_color=('#1E3A8A'), hover_color='#3B82F6', border_color='black', border_width=2).place(x=125,y=300)
 
         
-def removeGasto(motherWindow):
+def remove_gasto(motherWindow):
     dialogWindow = ctk.CTkInputDialog(motherWindow,text='Digite qual gasto deseja remover: ', button_fg_color='#1E3A8A', button_hover_color='#3B82F6')
     dialogWindow.geometry("400x200")
     dialogWindow.title("Remover Gasto")
@@ -111,5 +111,5 @@ def removeGasto(motherWindow):
         return
     if value_to_remove != '':
         main_page.delete_rows(int(value_to_remove)+1)
-        tabela.save('total_de_gastos.xlsx')
-        exibir_tabela(motherWindow)
+        table.save('total_de_gastos.xlsx')
+        verify_sheet(motherWindow)
