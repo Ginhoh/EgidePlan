@@ -4,12 +4,12 @@ from funcoes import *
 import customtkinter as ctk
 
 
-
+#carregar tabela
 table = load_workbook('total_de_gastos.xlsx')
 verify_sheet(table, actual_month())
 main_page = table[actual_month()]
 
-
+#mostrar tabela
 def show_table(position):
     try:
         cont = 1 
@@ -38,8 +38,9 @@ def show_table(position):
         pass     
     
 
-
+#Adicionar gasto
 def addGasto(motherWindow):
+    #função para enviar os dados para a tabela
     def submitGasto():
         try:
             lastCell = main_page.max_row + 1
@@ -97,7 +98,7 @@ def addGasto(motherWindow):
     finally:
         btnSubmit = ctk.CTkButton(AddWindow, command=submitGasto, width=150, text="Enviar",text_color='#F3F4F6', fg_color=('#1E3A8A'), hover_color='#3B82F6', border_color='black', border_width=2).place(x=125,y=300)
 
-        
+#Remover gasto
 def remove_gasto(motherWindow):
     dialogWindow = ctk.CTkInputDialog(motherWindow,text='Digite qual gasto deseja remover: ', button_fg_color='#1E3A8A', button_hover_color='#3B82F6')
     dialogWindow.geometry("400x200")

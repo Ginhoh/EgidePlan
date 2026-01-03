@@ -1,12 +1,13 @@
 from openpyxl import load_workbook
 from funcoes import *
 import customtkinter as ctk
-
+#Dashboard
 def exibir_dashboard(position): 
     tabela = load_workbook('total_de_gastos.xlsx')
     verify_sheet(tabela, actual_month())
     main_page = tabela[actual_month()]
-
+    
+    #Gastos totais, média, categoria com maior gasto, categoria com menor gasto, comparação com mês anterior
     def gastos_total(planilha):
         total = 0
         for linha in range(2, planilha.max_row+1):

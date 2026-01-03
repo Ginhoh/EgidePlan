@@ -1,18 +1,21 @@
+#Bibliotecas
 import customtkinter as ctk
 from funcoes import *
 from dashboard import *
 from gastos import *
 from home_contato import *
 
+#Configurações iniciais da janela principal
 ctk.set_appearance_mode('light')
 window = ctk.CTk()
 
 window.geometry("800x600")
 window.title("EgidePlan - Controle de Gastos")
-window.resizable(False, False)
-window.iconbitmap("assents/logo.ico") #Coloca o ícone da aplicação
+window.resizable(False, False) 
+window.iconbitmap("assents/logo.ico") 
 
 
+#Frames
 central_frame = ctk.CTkFrame(window, width=600, height=600, fg_color='#F3F4F6',border_color='#E5E7EB', border_width=2).place(x=200,y=0)
 
 lateral_frame = ctk.CTkFrame(window,  width=200, height=600, fg_color="#1E3A8A",border_color='#E5E7EB', border_width=1).place(x=0,y=0)

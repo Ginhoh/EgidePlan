@@ -1,6 +1,7 @@
 from openpyxl import workbook, load_workbook
 import customtkinter as ctk
-        
+
+#retornar mês atual
 def actual_month():
     from datetime import date
     mes = date.today().month
@@ -30,7 +31,7 @@ def verify_sheet(table, nameAba):
     if 'Sheet' in table.sheetnames:
         table.remove(table['Sheet'])
 
-
+#verificar se é a primeira aba
 def first(tabela):
     cont = 0
     for aba in tabela.sheetnames:

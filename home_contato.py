@@ -2,7 +2,9 @@ import customtkinter as ctk
 from PIL import Image
 import random
 from webbrowser import open
-#home frame
+
+
+#frases aleatórias
 sentences = [
      "O que pode ser medido, pode ser melhorado. O primeiro passo para a liberdade financeira é a clareza dos seus números.",
      "Pequenos vazamentos afundam grandes navios. Use o Edge Plan para identificar aqueles pequenos gastos que somam muito no final do mês.",
@@ -10,6 +12,7 @@ sentences = [
      "A organização financeira de hoje é a tranquilidade do seu 'eu' de amanhã.",
      "Não trabalhe pelo dinheiro, faça o dinheiro trabalhar para você. Comece entendendo para onde ele está indo."
 ]
+#home frame
 def home(frame):
      new_frame = ctk.CTkFrame(frame, width=600, height=600, fg_color='#F3F4F6').place(x=200) 
      
