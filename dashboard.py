@@ -10,13 +10,17 @@ def exibir_dashboard(position):
     #Gastos totais, média, categoria com maior gasto, categoria com menor gasto, comparação com mês anterior
     def gastos_total(planilha):
         total = 0
+
         for linha in range(2, planilha.max_row+1):
             total += float(planilha[f'B{linha}'].value)
         return total
 
 
     def gastos_media(planilha):
-        return (gastos_total(planilha)) / (planilha.max_row-1)
+        if planilha.max_row -1 == 0:
+            return 0
+        else:
+             return (gastos_total(planilha)) / (planilha.max_row-1)
 
 
     def categoria_maior(planilha):
