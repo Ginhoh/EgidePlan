@@ -30,6 +30,8 @@ def verify_sheet(table, nameAba):
         table[nameAba]['D1'].value = 'Data'
     if 'Sheet' in table.sheetnames:
         table.remove(table['Sheet'])
+    if 'Plan1' in table.sheetnames:
+        table.remove(table['Plan1'])
 
 #verificar se é a primeira aba
 def first(tabela):

@@ -45,8 +45,8 @@ def addGasto(motherWindow):
         try:
             lastCell = main_page.max_row + 1
             main_page[f'A{lastCell}'].value = descricaoEntry.get()
-
-            main_page[f'B{lastCell}'].value = valorEntry.get()
+            valor = valorEntry.get().replace(',','.')
+            main_page[f'B{lastCell}'].value = valor
 
             main_page[f'C{lastCell}'].value =  ctg_select.get()
 
@@ -85,7 +85,7 @@ def addGasto(motherWindow):
 
 
         ctg_select = ctk.CTkOptionMenu(AddWindow, width=300,fg_color="#E5E7EB", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#3d3d3d', button_color='#E5E7EB', button_hover_color='#575757',
-            values=["Essencial", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
+            values=["Essencial","Alimentação", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
         ctg_select.set("Selecione a categoria")
         ctg_select.place(x=50,y=200)
         
@@ -113,4 +113,4 @@ def remove_gasto(motherWindow):
     if value_to_remove != '':
         main_page.delete_rows(int(value_to_remove)+1)
         table.save('total_de_gastos.xlsx')
-        verify_sheet(motherWindow)
+        show_table(motherWindow)

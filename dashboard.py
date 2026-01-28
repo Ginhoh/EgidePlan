@@ -2,80 +2,82 @@ from openpyxl import load_workbook
 from funcoes import *
 import customtkinter as ctk
 #Dashboard
-def exibir_dashboard(position): 
-    tabela = load_workbook('total_de_gastos.xlsx')
-    verify_sheet(tabela, actual_month())
-    main_page = tabela[actual_month()]
+tabela = load_workbook('total_de_gastos.xlsx')
+verify_sheet(tabela, actual_month())
+main_page = tabela[actual_month()]
+
+#Gastos totais, média, categoria com maior gasto, categoria com menor gasto, comparação com mês anterior
+def gastos_total(planilha):
+    total = 0
+
+    for linha in range(2, planilha.max_row+1):
+        total += float(planilha[f'B{linha}'].value)
+    return total
+
+
+def gastos_media(planilha):
+    if planilha.max_row -1 == 0:
+        return 0
+    else:
+            return (gastos_total(planilha)) / (planilha.max_row-1)
+
+
+def categoria_maior(planilha):
+    "Essencial", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"
+    essencial = lazer = invest = transp = autoc = 0
+    for linha in range(2, planilha.max_row+1):
+        if planilha[f'C{linha}'].value == 'Essencial':
+            essencial += float(planilha[f'B{linha}'].value)
+
+        elif planilha[f'C{linha}'].value == 'Lazer':
+            lazer += float(planilha[f'B{linha}'].value)
+
+        elif planilha[f'C{linha}'].value == 'Investimentos':
+            invest += float(planilha[f'B{linha}'].value)
+        
+        elif planilha[f'C{linha}'].value == 'Transporte':
+            transp += float(planilha[f'B{linha}'].value)
+
+        elif planilha[f'C{linha}'].value == 'Auto Cuidado':
+            autoc += float(planilha[f'B{linha}'].value)
+
+    valores = {"Essencial": essencial, "Lazer": lazer, "Investimentos": invest, "Transporte": transp, "Auto Cuidado": autoc}
+    return max(valores, key=valores.get)
     
-    #Gastos totais, média, categoria com maior gasto, categoria com menor gasto, comparação com mês anterior
-    def gastos_total(planilha):
-        total = 0
-
-        for linha in range(2, planilha.max_row+1):
-            total += float(planilha[f'B{linha}'].value)
-        return total
 
 
-    def gastos_media(planilha):
-        if planilha.max_row -1 == 0:
-            return 0
-        else:
-             return (gastos_total(planilha)) / (planilha.max_row-1)
+def categoria_menor(planilha):
+    essencial = lazer = invest = transp = autoc = 0
+    for linha in range(2, planilha.max_row+1):
+        if planilha[f'C{linha}'].value == 'Essencial':
+            essencial += float(planilha[f'B{linha}'].value)
 
+        elif planilha[f'C{linha}'].value == 'Lazer':
+            lazer += float(planilha[f'B{linha}'].value)
 
-    def categoria_maior(planilha):
-        "Essencial", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"
-        essencial = lazer = invest = transp = autoc = 0
-        for linha in range(2, planilha.max_row+1):
-            if planilha[f'C{linha}'].value == 'Essencial':
-                essencial += float(planilha[f'B{linha}'].value)
+        elif planilha[f'C{linha}'].value == 'Investimentos':
+            invest += float(planilha[f'B{linha}'].value)
+        
+        elif planilha[f'C{linha}'].value == 'Transporte':
+            transp += float(planilha[f'B{linha}'].value)
 
-            elif planilha[f'C{linha}'].value == 'Lazer':
-                lazer += float(planilha[f'B{linha}'].value)
+        elif planilha[f'C{linha}'].value == 'Auto Cuidado':
+            autoc += float(planilha[f'B{linha}'].value)
 
-            elif planilha[f'C{linha}'].value == 'Investimentos':
-                invest += float(planilha[f'B{linha}'].value)
-            
-            elif planilha[f'C{linha}'].value == 'Transporte':
-                transp += float(planilha[f'B{linha}'].value)
+    valores = {"Essencial": essencial, "Lazer": lazer, "Investimentos": invest, "Transporte": transp, "Auto Cuidado": autoc}
+    return min(valores, key=valores.get)
 
-            elif planilha[f'C{linha}'].value == 'Auto Cuidado':
-                autoc += float(planilha[f'B{linha}'].value)
-
-        valores = {"Essencial": essencial, "Lazer": lazer, "Investimentos": invest, "Transporte": transp, "Auto Cuidado": autoc}
-        return max(valores, key=valores.get)
+def comparacao():
+    if first(tabela) == False:
+        meses = tabela.sheetnames
+        tot_anterior = gastos_total(tabela[tabela.sheetnames[len(meses)-2]])
+        if tot_anterior > gastos_total(main_page):
+            return f'R${tot_anterior - gastos_total(main_page)} a menos que o mês anterior'
+        elif tot_anterior < gastos_total(main_page):
+            return f'R${gastos_total(main_page) - tot_anterior } a mais que o mês anterior'
         
 
-
-    def categoria_menor(planilha):
-        essencial = lazer = invest = transp = autoc = 0
-        for linha in range(2, planilha.max_row+1):
-            if planilha[f'C{linha}'].value == 'Essencial':
-                essencial += float(planilha[f'B{linha}'].value)
-
-            elif planilha[f'C{linha}'].value == 'Lazer':
-                lazer += float(planilha[f'B{linha}'].value)
-
-            elif planilha[f'C{linha}'].value == 'Investimentos':
-                invest += float(planilha[f'B{linha}'].value)
-            
-            elif planilha[f'C{linha}'].value == 'Transporte':
-                transp += float(planilha[f'B{linha}'].value)
-
-            elif planilha[f'C{linha}'].value == 'Auto Cuidado':
-                autoc += float(planilha[f'B{linha}'].value)
-
-        valores = {"Essencial": essencial, "Lazer": lazer, "Investimentos": invest, "Transporte": transp, "Auto Cuidado": autoc}
-        return min(valores, key=valores.get)
-
-    def comparacao():
-        if first(tabela) == False:
-            meses = tabela.sheetnames
-            tot_anterior = gastos_total(tabela[tabela.sheetnames[len(meses)-2]])
-            if tot_anterior > gastos_total(main_page):
-                return f'R${tot_anterior - gastos_total(main_page)} a menos que o mês anterior'
-            elif tot_anterior < gastos_total(main_page):
-                return f'R${gastos_total(main_page) - tot_anterior } a mais que o mês anterior'
+def exibir_dashboard(position): 
 
     
     new_frame = ctk.CTkFrame(position, width=600, height=600, fg_color='#F3F4F6', border_width=2, border_color='#E5E7EB').place(x=200)
@@ -92,4 +94,14 @@ def exibir_dashboard(position):
     label_maior = ctk.CTkLabel(position, text=f'Categoria com maior gasto: {categoria_maior(main_page)}', font=('Arial',20),width=400,anchor='w', text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=230)
     label_menor = ctk.CTkLabel(position, text=f'Categoria com menor  gasto: {categoria_menor(main_page)}', font=('Arial',20),width=400,anchor='w', text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=260)
     label_comparacao = ctk.CTkLabel(position, text=comparacao(), font=('Arial',20), text_color='#1E3A8A', width=400,anchor='w', fg_color='#F3F4F6').place(x=240,y=290)
+    
+
+    ctg_select = ctk.CTkOptionMenu(new_frame, width=100,fg_color="#F3F4F6", dropdown_fg_color='#F3F4F6', dropdown_text_color='black', text_color='#3d3d3d', button_color='#F3F4F6', button_hover_color='#575757',
+        values= tabela.sheetnames)
+    ctg_select.set("Selecione o mês")
+    ctg_select.place(x=630,y=300)
+        
+    
+    table_scrollbar = ctk.CTkScrollableFrame(new_frame, width=490, height=230, fg_color='#F3F4F6', border_width=2, border_color='#E5E7EB')
+    table_scrollbar.place(x=240,y=330)
     
