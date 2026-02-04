@@ -77,11 +77,28 @@ def comparacao():
             return f'R${gastos_total(main_page) - tot_anterior } a mais que o mês anterior'
         
 
-def exibir_dashboard(position): 
+def gastos_por_categoria(planilha, categoria):
+    total_categoria = 0
+    for linha in range(2, planilha.max_row+1):
+        if planilha[f'C{linha}'].value == categoria:
+            total_categoria += float(planilha[f'B{linha}'].value)
+    return total_categoria
 
-    
+
+def exibir_dashboard(position): 
+    def last_table(mouth):
+        main_page = tabela[mouth]
+        print(mouth)
+
+
     new_frame = ctk.CTkFrame(position, width=600, height=600, fg_color='#F3F4F6', border_width=2, border_color='#E5E7EB').place(x=200)
     title = ctk.CTkLabel(new_frame,width=600, text='DASHBOARD',font=('Arial', 20, 'bold'),text_color='#1E3A8A', justify='center', fg_color='#F3F4F6').place(x=200,y=5)
+
+    ctg_select = ctk.CTkOptionMenu(new_frame, width=100,command=lambda choice: last_table(choice),fg_color="#F3F4F6", dropdown_fg_color='#F3F4F6', dropdown_text_color='black', text_color='#3d3d3d', button_color='#F3F4F6', button_hover_color='#575757',
+        values= tabela.sheetnames)
+    ctg_select.set("Selecione o mês")
+    ctg_select.place(x=630,y=5)
+        
 
 
     bloco1=ctk.CTkFrame(position, width=200, height=100, fg_color="#F3F4F6", border_width=2, border_color="#E5E7EB", bg_color='transparent').place(x=230,y=60)
@@ -92,16 +109,28 @@ def exibir_dashboard(position):
 
 
     label_maior = ctk.CTkLabel(position, text=f'Categoria com maior gasto: {categoria_maior(main_page)}', font=('Arial',20),width=400,anchor='w', text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=230)
+
     label_menor = ctk.CTkLabel(position, text=f'Categoria com menor  gasto: {categoria_menor(main_page)}', font=('Arial',20),width=400,anchor='w', text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=260)
+
     label_comparacao = ctk.CTkLabel(position, text=comparacao(), font=('Arial',20), text_color='#1E3A8A', width=400,anchor='w', fg_color='#F3F4F6').place(x=240,y=290)
+
+    subtitle = ctk.CTkLabel(position,width=600, text='Gastos por Categoria',font=('Arial', 16, 'bold'),text_color='#1E3A8A', justify='center', fg_color='#F3F4F6').place(x=200,y=320)
+
+    label_essencial = ctk.CTkLabel(position, text=f'Essencial: R${gastos_por_categoria(main_page, "Essencial"):.2f}', font=('Arial',14), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=360)
+
+    label_alimentacao = ctk.CTkLabel(position, text=f'Alimentação: R${gastos_por_categoria(main_page, "Alimentação"):.2f}', font=('Arial',14), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=390)
+
+    label_lazer = ctk.CTkLabel(position, text=f'Lazer: R${gastos_por_categoria(main_page, "Lazer"):.2f}', font=('Arial',14), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=420)
+    label_investimentos = ctk.CTkLabel(position, text=f'Investimentos: R${gastos_por_categoria(main_page, "Investimentos"):.2f}', font=('Arial',14), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=450)
+
+    label_transporte = ctk.CTkLabel(position, text=f'Transporte: R${gastos_por_categoria(main_page, "Transporte"):.2f}', font=('Arial',14), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=480)
+    
+    label_autocuidado = ctk.CTkLabel(position, text=f'Auto-Cuidado: R${gastos_por_categoria(main_page, "Auto Cuidado"):.2f}', font=('Arial',14), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=510)
     
 
-    ctg_select = ctk.CTkOptionMenu(new_frame, width=100,fg_color="#F3F4F6", dropdown_fg_color='#F3F4F6', dropdown_text_color='black', text_color='#3d3d3d', button_color='#F3F4F6', button_hover_color='#575757',
-        values= tabela.sheetnames)
-    ctg_select.set("Selecione o mês")
-    ctg_select.place(x=630,y=300)
-        
-    
+
+
+'''
     table_scrollbar = ctk.CTkScrollableFrame(new_frame, width=490, height=230, fg_color='#F3F4F6', border_width=2, border_color='#E5E7EB')
     table_scrollbar.place(x=240,y=330)
-    
+    '''
