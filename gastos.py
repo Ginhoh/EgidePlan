@@ -11,6 +11,32 @@ main_page = table[actual_month()]
 
 #mostrar tabela
 def show_table(position):
+
+    #Função que abre uma nova janela para exibir tabela anterior
+    def last_tb(choice):
+            new_window = ctk.CTkToplevel(position, fg_color='#3B82F6')
+            new_window.geometry("500x500")
+            new_window.title(f"Tabela de {choice}")
+            new_window.resizable(False, False)
+            new_window.iconbitmap("assents/logo.ico") #Coloca o ícone da aplicação
+            new_window.transient(position) # vincula a janela filha à janela mãe
+            new_window.grab_set()# impede interação com a janela mãe
+            new_window.lift()# traz a janela para frente
+            new_scroll = ctk.CTkScrollableFrame(new_window, width=400, height=400, fg_color='#F3F4F6')
+            new_scroll.pack(pady=50)
+            main_page = table[choice]
+            cont = 1
+            for linha in range(2, main_page.max_row+1):
+                valorA = main_page[f'A{linha}'].value
+                valorB = float(main_page[f'B{linha}'].value)
+                valorC = main_page[f'C{linha}'].value
+                valorD = main_page[f'D{linha}'].value
+                new_label = ctk.CTkLabel(new_scroll, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A', width=350, anchor='w')
+                new_label.pack(fill='x', pady=5)
+                cont += 1
+
+
+    #Exibção da tabela principal
     try:
         cont = 1 
         px = 50
@@ -19,6 +45,12 @@ def show_table(position):
         scroll_table.place(x=230,y=50)
         
         labelGastos = ctk.CTkLabel(position, justify='center', width=600, text="Confira seus gastos aqui", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
+
+        ctg_select = ctk.CTkOptionMenu(new_frame,command=lambda choice: last_tb(choice), width=100,fg_color="#F3F4F6", dropdown_fg_color='#F3F4F6', dropdown_text_color='black', text_color='#3d3d3d', button_color='#F3F4F6', button_hover_color='#575757',
+            values= table.sheetnames)
+        ctg_select.set("Selecione o mês")
+        ctg_select.place(x=650,y=15)
+
         for linha in range(2, main_page.max_row+1):
             valorA = main_page[f'A{linha}'].value
             valorB = float(main_page[f'B{linha}'].value)
@@ -26,7 +58,6 @@ def show_table(position):
             valorD = main_page[f'D{linha}'].value
             new_label = ctk.CTkLabel(scroll_table, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A', width=460, anchor='w',)
             new_label.pack(fill='x', pady=5)
-            num = float(valorB)
 
             cont += 1
             px += 30
@@ -84,10 +115,11 @@ def addGasto(motherWindow):
         
 
 
-        ctg_select = ctk.CTkOptionMenu(AddWindow, width=300,fg_color="#E5E7EB", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#3d3d3d', button_color='#E5E7EB', button_hover_color='#575757',
+        ctg_select = ctk.CTkOptionMenu(AddWindow, width=300, fg_color="#E5E7EB", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#3d3d3d', button_color='#E5E7EB', button_hover_color='#575757',
             values=["Essencial","Alimentação", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
         ctg_select.set("Selecione a categoria")
         ctg_select.place(x=50,y=200)
+        
         
 
  
@@ -97,6 +129,7 @@ def addGasto(motherWindow):
 
     finally:
         btnSubmit = ctk.CTkButton(AddWindow, command=submitGasto, width=150, text="Enviar",text_color='#F3F4F6', fg_color=('#1E3A8A'), hover_color='#3B82F6', border_color='black', border_width=2).place(x=125,y=300)
+
 
 #Remover gasto
 def remove_gasto(motherWindow):
@@ -114,3 +147,5 @@ def remove_gasto(motherWindow):
         main_page.delete_rows(int(value_to_remove)+1)
         table.save('total_de_gastos.xlsx')
         show_table(motherWindow)
+
+
