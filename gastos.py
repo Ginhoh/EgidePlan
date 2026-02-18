@@ -46,10 +46,7 @@ def show_table(position):
         
         labelGastos = ctk.CTkLabel(position, justify='center', width=600, text="Confira seus gastos aqui", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
 
-        ctg_select = ctk.CTkOptionMenu(new_frame,command=lambda choice: last_tb(choice), width=100,fg_color="#F3F4F6", dropdown_fg_color='#F3F4F6', dropdown_text_color='black', text_color='#3d3d3d', button_color='#F3F4F6', button_hover_color='#575757',
-            values= table.sheetnames)
-        ctg_select.set("Selecione o mês")
-        ctg_select.place(x=650,y=15)
+       
 
         for linha in range(2, main_page.max_row+1):
             valorA = main_page[f'A{linha}'].value
@@ -63,6 +60,13 @@ def show_table(position):
             px += 30
         btnAdd = ctk.CTkButton(position,command=lambda:addGasto(position), width=150, text="Adicionar Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=325,y=500)
         btnRemove = ctk.CTkButton(position,command=lambda:remove_gasto(position), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
+        
+        msg_last = ctk.CTkLabel(position, text='Verificar gastos anteriores:',font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=325,y=535)
+
+        ctg_select = ctk.CTkOptionMenu(position,command=lambda choice: last_tb(choice), width=100,fg_color="#F3F4F6", dropdown_fg_color='#F3F4F6', dropdown_text_color='black', text_color='#3d3d3d', button_color='#F3F4F6', button_hover_color='#575757',
+            values= table.sheetnames)
+        ctg_select.set("Selecione o mês")
+        ctg_select.place(x=525,y=535)
     except:
         new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
     finally:   
