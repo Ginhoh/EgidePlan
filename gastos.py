@@ -58,9 +58,12 @@ def show_table(position):
 
             cont += 1
             px += 30
-        btnAdd = ctk.CTkButton(position,command=lambda:addGasto(position), width=150, text="Adicionar Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=325,y=500)
-        btnRemove = ctk.CTkButton(position,command=lambda:remove_gasto(position), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=525,y=500)
+        btn_add = ctk.CTkButton(position,command=lambda:addGasto(position), width=150, text="Adicionar Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=235,y=500)
+
+        btn_remove = ctk.CTkButton(position,command=lambda:remove_gasto(position), width=150, text="Remover Gasto", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=425,y=500)
         
+        btn_fixo = ctk.CTkButton(position,command=lambda:gasto_fixo(position), width=150, text="Criar Gasto Fixo", fg_color=('#3B82F6'),text_color='black', border_color='black', border_width=2).place(x=615,y=500)
+
         msg_last = ctk.CTkLabel(position, text='Verificar gastos anteriores:',font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=325,y=535)
 
         ctg_select = ctk.CTkOptionMenu(position,command=lambda choice: last_tb(choice), width=100,fg_color="#F3F4F6", dropdown_fg_color='#F3F4F6', dropdown_text_color='black', text_color='#3d3d3d', button_color='#F3F4F6', button_hover_color='#575757',
@@ -153,3 +156,36 @@ def remove_gasto(motherWindow):
         show_table(motherWindow)
 
 
+def gasto_fixo(motherWindow):
+    try:
+        AddWindow = ctk.CTkToplevel(motherWindow, fg_color='#F3F4F6')
+        AddWindow.geometry("400x400")
+        AddWindow.title("Criar Gasto Fixo")
+        AddWindow.resizable(False, False)
+        AddWindow.iconbitmap("assents/logo.ico") #Coloca o ícone da aplicação
+        AddWindow.transient(motherWindow) # vincula a janela filha à janela mãe
+        AddWindow.grab_set()# impede interação com a janela mãe
+        AddWindow.lift()# traz a janela para frente
+
+        labelInfo = ctk.CTkLabel(AddWindow, text="Preencha as informações do gasto abaixo:",width=400, justify='center', font=ctk.CTkFont(size=16, weight="bold"), text_color='#1E3A8A').place(x=0,y=20)
+
+        descricaoEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Título do Gasto",fg_color="#E5E7EB", text_color='#3d3d3d')
+        descricaoEntry.place(x=50,y=80)
+        
+
+        valorEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Valor (Utilize . para as casas decimais.)",fg_color="#E5E7EB", text_color='#3d3d3d')
+        valorEntry.place(x=50,y=140)
+        
+
+
+        ctg_select = ctk.CTkOptionMenu(AddWindow, width=300, fg_color="#E5E7EB", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#3d3d3d', button_color='#E5E7EB', button_hover_color='#575757',
+            values=["Essencial","Alimentação", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
+        ctg_select.set("Selecione a categoria")
+        ctg_select.place(x=50,y=200)
+
+    except ValueError or IndexError or KeyError:
+        print('Houve um erro no envio das informações. Revise o que foi pedido e tente novamente.')
+
+    finally:
+        btnSubmit = ctk.CTkButton(AddWindow, width=150, text="Criar Gasto",text_color='#F3F4F6', fg_color=('#1E3A8A'), hover_color='#3B82F6', border_color='black', border_width=2).place(x=125,y=300)
+    
