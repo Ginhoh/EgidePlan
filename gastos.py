@@ -1,4 +1,5 @@
 from openpyxl import load_workbook
+from models import *
 from datetime import date
 from funcoes import *
 import customtkinter as ctk
@@ -48,11 +49,10 @@ def show_table(position):
 
        
 
-        for linha in range(2, main_page.max_row+1):
-            valorA = main_page[f'A{linha}'].value
-            valorB = float(main_page[f'B{linha}'].value)
-            valorC = main_page[f'C{linha}'].value
-            valorD = main_page[f'D{linha}'].value
+        cursor.execute("""SELECT nome, valor, categoria, data FROM gastos""")
+        query = cursor.fetchall()
+        for dados in query:
+            valorA, valorB, valorC,valorD = dados
             new_label = ctk.CTkLabel(scroll_table, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A', width=460, anchor='w',)
             new_label.pack(fill='x', pady=5)
 
@@ -70,8 +70,8 @@ def show_table(position):
             values= table.sheetnames)
         ctg_select.set("Selecione o mês")
         ctg_select.place(x=525,y=535)
-    except:
-        new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
+    except NameError as e:
+        new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!\n{e}', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
     finally:   
         pass     
     
