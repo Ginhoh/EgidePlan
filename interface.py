@@ -1,9 +1,9 @@
 #Bibliotecas
 import customtkinter as ctk
 from funcoes import *
-from dashboard import *
-from gastos import *
-from home_contato import *
+from pages.dashboard import *
+from pages.gastos import *
+from pages.home_contato import *
 
 #Configurações iniciais da janela principal
 ctk.set_appearance_mode('light')

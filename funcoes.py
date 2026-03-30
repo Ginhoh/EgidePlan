@@ -5,18 +5,18 @@ import customtkinter as ctk
 def actual_month():
     from datetime import date
     mes = date.today().month
-    if mes == 1: return 'Janeiro'
-    elif mes == 2: return 'Fevereiro'
-    elif mes == 3: return 'Março'
-    elif mes == 4: return 'Abril'
-    elif mes == 5: return 'Maio'
-    elif mes == 6: return 'Junho'
-    elif mes == 7: return 'Julho'
-    elif mes == 8: return 'Agosto'
-    elif mes == 9: return 'Setembro'
-    elif mes == 10: return 'Outubro'
-    elif mes == 11: return 'Novembro'
-    elif mes == 12: return 'Dezembro'
+    if mes == 1: return '01'
+    elif mes == 2: return '02'
+    elif mes == 3: return '03'
+    elif mes == 4: return '04'
+    elif mes == 5: return '05'
+    elif mes == 6: return '06'
+    elif mes == 7: return '07'
+    elif mes == 8: return '08'
+    elif mes == 9: return '09'
+    elif mes == 10: return '10'
+    elif mes == 11: return '11'
+    elif mes == 12: return '12'
 
 
 #criar_abas():

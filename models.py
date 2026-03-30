@@ -19,8 +19,7 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS fixos (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
                nome TEXT(100) NOT NULL,
                valor REAL NOT NULL,
-               categoria TEXT(50) NOT NULL,
-               data DATE NOT NULL
+               categoria TEXT(50) NOT NULL
                )""")
 
 
@@ -53,5 +52,7 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS fixos (
         
 
 #cursor.execute("""DELETE FROM gastos""") #Limpa a tabela para evitar duplicação de dados
+
+
 
 db.commit()
