@@ -7,36 +7,10 @@ import customtkinter as ctk
 
 #carregar tabela
 table = load_workbook('total_de_gastos.xlsx')
-verify_sheet(table, actual_month())
-main_page = table[actual_month()]
+main_page = table['Março']
 
 #mostrar tabela
 def show_table(position):
-
-    #Função que abre uma nova janela para exibir tabela anterior
-    def last_tb(choice):
-            new_window = ctk.CTkToplevel(position, fg_color='#3B82F6')
-            new_window.geometry("500x500")
-            new_window.title(f"Tabela de {choice}")
-            new_window.resizable(False, False)
-            new_window.iconbitmap("assents/logo.ico") #Coloca o ícone da aplicação
-            new_window.transient(position) # vincula a janela filha à janela mãe
-            new_window.grab_set()# impede interação com a janela mãe
-            new_window.lift()# traz a janela para frente
-            new_scroll = ctk.CTkScrollableFrame(new_window, width=400, height=400, fg_color='#F3F4F6')
-            new_scroll.pack(pady=50)
-            main_page = table[choice]
-            cont = 1
-            for linha in range(2, main_page.max_row+1):
-                valorA = main_page[f'A{linha}'].value
-                valorB = float(main_page[f'B{linha}'].value)
-                valorC = main_page[f'C{linha}'].value
-                valorD = main_page[f'D{linha}'].value
-                new_label = ctk.CTkLabel(new_scroll, text=f'{cont}. {valorA}: R${valorB:.2f} ({valorC}) {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A', width=350, anchor='w')
-                new_label.pack(fill='x', pady=5)
-                cont += 1
-
-
     #Exibção da tabela principal
     try:
         cont = 1 
@@ -49,7 +23,7 @@ def show_table(position):
 
        
 
-        cursor.execute(f"""SELECT nome, valor, categoria, data FROM gastos WHERE data LIKE '%{actual_month()}%'""")
+        cursor.execute(f"""SELECT nome, valor, categoria, data FROM gastos WHERE data LIKE '%/{actual_month()}/%'""")
         query = cursor.fetchall()
         for dados in query:
             valorA, valorB, valorC,valorD = dados
@@ -66,13 +40,7 @@ def show_table(position):
         btn_fixo = ctk.CTkButton(position, command=lambda:gasto_fixo(position), width=140, text="Criar Gasto Fixo", fg_color=('#3B82F6'), text_color='black', border_color='black', border_width=2).place(x=505, y=500)
 
         btn_remove_fixo = ctk.CTkButton(position, command=lambda:remove_gasto_fixo(position), width=140, text="Remover Gasto Fixo", fg_color=('#3B82F6'), text_color='black', border_color='black', border_width=2).place(x=655, y=500)
-
-        msg_last = ctk.CTkLabel(position, text='Verificar gastos anteriores:', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=325,y=535)
-
-        ctg_select = ctk.CTkOptionMenu(position,command=lambda choice: last_tb(choice), width=100,fg_color="#F3F4F6", dropdown_fg_color='#F3F4F6', dropdown_text_color='black', text_color='#3d3d3d', button_color='#F3F4F6', button_hover_color='#575757',
-            values= table.sheetnames)
-        ctg_select.set("Selecione o mês")
-        ctg_select.place(x=525,y=535)
+                
 
     except NameError as e:
         new_label = ctk.CTkLabel(new_frame, text=f'Ops! Não foi possível carregar os dados em nosso sistema\n Por favor, tente novamente!\n{e}', font=ctk.CTkFont(size=12), fg_color='#F3F4F6', text_color='black').place(x=240,y=px)
@@ -85,8 +53,6 @@ def addGasto(motherWindow):
     #função para enviar os dados para a tabela
     def submitGasto():
         try:
-            lastCell = main_page.max_row + 1
-
             valor = valorEntry.get().replace(',','.')
             today = date.today().strftime('%d/%m/%Y')
             cursor.execute("""INSERT INTO gastos (nome, valor, categoria, data) VALUES (?, ?, ?, ?)""", (descricaoEntry.get(), float(valor), ctg_select.get(), today))
@@ -134,9 +100,11 @@ def addGasto(motherWindow):
         valorEntry.place(x=50,y=140)
         
 
+        cursor.execute("""SELECT nome FROM categoria""")
+        dados = cursor.fetchall()
 
         ctg_select = ctk.CTkOptionMenu(AddWindow, width=300, fg_color="#E5E7EB", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#3d3d3d', button_color='#E5E7EB', button_hover_color='#575757',
-            values=["Essencial","Alimentação", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
+            values=[dado[0] for dado in dados])
         ctg_select.set("Selecione a categoria")
         ctg_select.place(x=50,y=200)
         
@@ -227,9 +195,11 @@ def gasto_fixo(motherWindow):
         valorEntry.place(x=50,y=140)
         
 
-
+        cursor.execute("""SELECT nome FROM categoria""")
+        dados = cursor.fetchall()
+        
         ctg_select = ctk.CTkOptionMenu(AddWindow, width=300, fg_color="#E5E7EB", dropdown_fg_color='#E5E7EB', dropdown_text_color='black', text_color='#3d3d3d', button_color='#E5E7EB', button_hover_color='#575757',
-            values=["Essencial","Alimentação", "Lazer", "Investimentos", "Transporte", "Auto Cuidado"])
+            values=[dado[0] for dado in dados])
         ctg_select.set("Selecione a categoria")
         ctg_select.place(x=50,y=200)
 
@@ -272,7 +242,7 @@ def remove_gasto_fixo(motherWindow):
         windowrf.grab_set()# impede interação com a janela mãe
         windowrf.lift()# traz a janela para frente
 
-        delete_input = ctk.CTkLabel(windowrf, text='Digite o número do gasto fixo que deseja remover:', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=20,y=300)
+        delete_input = ctk.CTkLabel(windowrf, text='Digite o número do gasto fixo que deseja remover:', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=20,y=280)
         delete_entry = ctk.CTkEntry(windowrf, width=360, placeholder_text="Ex: 1",fg_color="#E5E7EB", text_color='#3d3d3d')
         delete_entry.place(x=20,y=320)
         btn_delete = ctk.CTkButton(windowrf, command=lambda: delete_fixo(delete_entry.get()), width=360, text="Remover Gasto Fixo", fg_color=('#1E3A8A'), text_color='#F3F4F6', hover_color='#3B82F6', border_color='black', border_width=2).place(x=20,y=350)

@@ -4,6 +4,7 @@ from funcoes import *
 from pages.dashboard import *
 from pages.gastos import *
 from pages.home_contato import *
+from pages.historico import *
 
 #Configurações iniciais da janela principal
 ctk.set_appearance_mode('light')
@@ -28,7 +29,9 @@ btn_dashboard = ctk.CTkButton(lateral_frame, width=200, command=lambda:exibir_da
 
 btn_gastos = ctk.CTkButton(lateral_frame, command=lambda:show_table(central_frame), text="Gastos",anchor='w',  width=200, fg_color=('#F3F4F6'),text_color='#1E3A8A', border_color='#E5E7EB', border_width=1, hover_color='#3B82F6').place(x=0,y=230)  # botão para abrir a lista de gastos
 
-btn_contato = ctk.CTkButton(lateral_frame, command=lambda:contact(central_frame), text="Contato",anchor='w',  width=200, fg_color=('#F3F4F6'),text_color='#1E3A8A', border_color='#E5E7EB', border_width=1, hover_color='#3B82F6').place(x=0,y=260)  # botão para abrir a tela de contato
+btn_historico = ctk.CTkButton(lateral_frame,command=lambda:show_history(central_frame), text="Histórico",anchor='w',  width=200, fg_color=('#F3F4F6'),text_color='#1E3A8A', border_color='#E5E7EB', border_width=1, hover_color='#3B82F6').place(x=0,y=260)  # botão para abrir histórico de gastos
+
+btn_contato = ctk.CTkButton(lateral_frame, command=lambda:contact(central_frame), text="Contato",anchor='w',  width=200, fg_color=('#F3F4F6'),text_color='#1E3A8A', border_color='#E5E7EB', border_width=1, hover_color='#3B82F6').place(x=0,y=290)  # botão para abrir a tela de contato
 
 home(central_frame)  # mostra a tela inicial ao iniciar
 window.mainloop()  # inicia o loop de eventos da GUI

@@ -1,5 +1,3 @@
-from openpyxl import workbook, load_workbook
-import customtkinter as ctk
 
 #retornar mês atual
 def actual_month():
@@ -18,30 +16,48 @@ def actual_month():
     elif mes == 11: return '11'
     elif mes == 12: return '12'
 
+def past_month():
+    from datetime import date
+    mes = date.today().month
+    if mes == 1: return '12'
+    elif mes == 2: return '01'
+    elif mes == 3: return '02'
+    elif mes == 4: return '03'
+    elif mes == 5: return '04'
+    elif mes == 6: return '05'
+    elif mes == 7: return '06'
+    elif mes == 8: return '07'
+    elif mes == 9: return '08'
+    elif mes == 10: return '09'
+    elif mes == 11: return '10'
+    elif mes == 12: return '11'
 
-#criar_abas():
-def verify_sheet(table, nameAba):
-    if nameAba not in table.sheetnames:
-        table.create_sheet(nameAba)
 
-        table[nameAba]['A1'].value = 'Descrição'
-        table[nameAba]['B1'].value = 'Valor'
-        table[nameAba]['C1'].value = 'Tipo de gasto'
-        table[nameAba]['D1'].value = 'Data'
-    if 'Sheet' in table.sheetnames:
-        table.remove(table['Sheet'])
-    if 'Plan1' in table.sheetnames:
-        table.remove(table['Plan1'])
+def past_month_name(mes):
+    if mes == '01': return 'Dezembro'
+    elif mes == '02': return 'Janeiro'
+    elif mes == '03': return 'Fevereiro'
+    elif mes == '04': return 'Março'
+    elif mes == '05': return 'Abril'
+    elif mes == '06': return 'Maio'
+    elif mes == '07': return 'Junho'
+    elif mes == '08': return 'Julho'
+    elif mes == '09': return 'Agosto'
+    elif mes == '10': return 'Setembro'
+    elif mes == '11': return 'Outubro'
+    elif mes == '12': return 'Novembro'
 
-#verificar se é a primeira aba
-def first(tabela):
-    cont = 0
-    for aba in tabela.sheetnames:
-        cont += 1
-    if cont == 1:
-        return True
-    else:
-        return False  
-    
-
+def choice_month(mes):
+    if mes == 'Janeiro': return '01'
+    elif mes == 'Fevereiro': return '02'
+    elif mes == 'Março': return '03'
+    elif mes == 'Abril': return '04'
+    elif mes == 'Maio': return '05'
+    elif mes == 'Junho': return '06'
+    elif mes == 'Julho': return '07'
+    elif mes == 'Agosto': return '08'
+    elif mes == 'Setembro': return '09'
+    elif mes == 'Outubro': return '10'
+    elif mes == 'Novembro': return '11'
+    elif mes == 'Dezembro': return '12'
 

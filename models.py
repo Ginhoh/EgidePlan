@@ -1,8 +1,5 @@
+from funcoes import past_month_name
 import sqlite3
-from openpyxl import load_workbook
-
-table = load_workbook('total_de_gastos.xlsx')
-main_page = table[table.sheetnames[-1]]
 
 db = sqlite3.connect('gastos.db')
 cursor = db.cursor()
@@ -21,6 +18,11 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS fixos (
                valor REAL NOT NULL,
                categoria TEXT(50) NOT NULL
                )""")
+
+cursor.execute("""CREATE TABLE IF NOT EXISTS categoria (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               nome TEXT(100) NOT NULL UNIQUE)
+""")
 
 
 # cursor.execute("""SELECT nome, valor, categoria, data FROM gastos""")
@@ -53,6 +55,16 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS fixos (
 
 #cursor.execute("""DELETE FROM gastos""") #Limpa a tabela para evitar duplicação de dados
 
+# cursor.execute(f"""SELECT categoria, SUM(valor) FROM gastos GROUP BY categoria""")
+# dados = cursor.fetchall()
+def months_():
+    cursor.execute("""SELECT data FROM gastos GROUP BY data""")
+    dados = cursor.fetchall()
+    mes = []
+    for data in dados:
+        if past_month_name(data[0][3:5:]) not in mes:
+            mes.append(past_month_name(data[0][3:5:]))
+    return mes
 
 
 db.commit()
