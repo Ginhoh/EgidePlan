@@ -1,4 +1,4 @@
-from funcoes import past_month_name
+
 import sqlite3
 
 db = sqlite3.connect('gastos.db')
@@ -57,14 +57,10 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS categoria (
 
 # cursor.execute(f"""SELECT categoria, SUM(valor) FROM gastos GROUP BY categoria""")
 # dados = cursor.fetchall()
-def months_():
-    cursor.execute("""SELECT data FROM gastos GROUP BY data""")
-    dados = cursor.fetchall()
-    mes = []
-    for data in dados:
-        if past_month_name(data[0][3:5:]) not in mes:
-            mes.append(past_month_name(data[0][3:5:]))
-    return mes
+
+cursor.execute(f"""SELECT categoria, SUM(valor) FROM gastos WHERE data LIKE '%/01/%' 
+               GROUP BY categoria """)
+dados = cursor.fetchall()
 
 
 db.commit()

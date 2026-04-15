@@ -187,7 +187,7 @@ def gasto_fixo(motherWindow):
 
         labelInfo = ctk.CTkLabel(AddWindow, text="Preencha as informações do gasto abaixo:",width=400, justify='center', font=ctk.CTkFont(size=16, weight="bold"), text_color='#1E3A8A').place(x=0,y=20)
 
-        descricaoEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Título do Gasto",fg_color="#E5E7EB", text_color='#3d3d3d')
+        descricaoEntry = ctk.CTkEntry(AddWindow, width=300, placeholder_text="Título do Gasto (Max: 20 caracteres)",fg_color="#E5E7EB", text_color='#3d3d3d')
         descricaoEntry.place(x=50,y=80)
         
 
