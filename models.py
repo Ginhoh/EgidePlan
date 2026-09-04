@@ -24,6 +24,14 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS categoria (
                nome TEXT(100) NOT NULL UNIQUE)
 """)
 
+#Inserção de categorias pré-definidas, caso ainda não existam no banco de dados
+cursor.execute("""INSERT OR IGNORE INTO categoria (nome) VALUES 
+               ('Essencial'),
+               ('Alimetação'),
+               ('Lazer'),
+               ('Investimentos'),
+                ('Transporte'),
+                ('Auto Cuidado')""")
 
 # cursor.execute("""SELECT nome, valor, categoria, data FROM gastos""")
 # query = cursor.fetchall()
@@ -33,14 +41,6 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS categoria (
 
 
 
-# for linha in range(2, main_page.max_row+1):
-#     valorA = main_page[f'A{linha}'].value
-#     valorB = float(main_page[f'B{linha}'].value)
-#     valorC = main_page[f'C{linha}'].value
-#     valorD = main_page[f'D{linha}'].value
-
-#     cursor.execute("""INSERT INTO GASTOS (nome, valor, categoria, data)
-#                    VALUES (?, ?, ?, ?)""", (valorA, valorB, valorC, valorD))
 # for i in table.sheetnames:
 #     page = table[i]
 #     for linha in range(2, page.max_row+1):
@@ -57,10 +57,5 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS categoria (
 
 # cursor.execute(f"""SELECT categoria, SUM(valor) FROM gastos GROUP BY categoria""")
 # dados = cursor.fetchall()
-
-cursor.execute(f"""SELECT categoria, SUM(valor) FROM gastos WHERE data LIKE '%/01/%' 
-               GROUP BY categoria """)
-dados = cursor.fetchall()
-
 
 db.commit()

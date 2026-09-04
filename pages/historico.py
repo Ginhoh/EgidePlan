@@ -29,7 +29,7 @@ def last_tb(choice, position):
         new_label.pack(fill='x', pady=5)
         cont += 1
 
-    #bloco1=ctk.CTkFrame(position, width=200, height=100, fg_color="#F3F4F6", border_width=2, border_color="#E5E7EB", bg_color='transparent').place(x=230,y=450)
+    #frame=ctk.CTkFrame(position, width=600, height=100, fg_color="#F3F4F6", border_width=2, border_color="#E5E7EB", bg_color='transparent').place(x=230,y=450)
     label_total = ctk.CTkLabel(position, text=f'TOTAL\nR${gastos_total(choice_month(choice)):,.2f}', font=('Arial',24), text_color='#1E3A8A',width=194, height=94, fg_color='#F3F4F6').place(x=32,y=432)
 
     label_maior = ctk.CTkLabel(position, text=f'Categoria com maior gasto: {categoria_maior(choice_month(choice))}', font=('Arial',16),width=400,anchor='w', text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=432)
@@ -37,13 +37,13 @@ def last_tb(choice, position):
     label_menor = ctk.CTkLabel(position, text=f'Categoria com menor gasto: {categoria_menor(choice_month(choice))}', font=('Arial',16),width=400,anchor='w', text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=462)
 
 
-    label_essencial = ctk.CTkLabel(position, text=f'Essencial: R${gastos_por_categoria(choice_month(choice), 'Essencial'):,.2f}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=490)
+    label_essencial = ctk.CTkLabel(position, text=f'Essencial: R${gastos_por_categoria(choice_month(choice), 'Essencial')}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=490)
 
-    label_alimentacao = ctk.CTkLabel(position, text=f'Alimentação: R${gastos_por_categoria(choice_month(choice), 'Alimetação'):,.2f}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=440,y=490)
+    label_alimentacao = ctk.CTkLabel(position, text=f'Alimentação: R${gastos_por_categoria(choice_month(choice), 'Alimetação')}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=440,y=490)
 
-    label_lazer = ctk.CTkLabel(position, text=f'Lazer: R${gastos_por_categoria(choice_month(choice), 'Lazer'):,.2f}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=520)
-    label_investimentos = ctk.CTkLabel(position, text=f'Investimentos: R${gastos_por_categoria(choice_month(choice), 'Investimentos'):,.2f}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=440,y=520)
+    label_lazer = ctk.CTkLabel(position, text=f'Lazer: R${gastos_por_categoria(choice_month(choice), 'Lazer')}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=520)
+    label_investimentos = ctk.CTkLabel(position, text=f'Investimentos: R${gastos_por_categoria(choice_month(choice), 'Investimentos')}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=440,y=520)
 
-    label_transporte = ctk.CTkLabel(position, text=f'Transporte: R${gastos_por_categoria(choice_month(choice), 'Transporte'):,.2f}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=550)
+    label_transporte = ctk.CTkLabel(position, text=f'Transporte: R${gastos_por_categoria(choice_month(choice), 'Transporte')}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=240,y=550)
     
-    label_autocuidado = ctk.CTkLabel(position, text=f'Auto-Cuidado: R${gastos_por_categoria(choice_month(choice), 'Auto Cuidado'):,.2f}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=440,y=550)
+    label_autocuidado = ctk.CTkLabel(position, text=f'Auto-Cuidado: R${gastos_por_categoria(choice_month(choice), 'Auto Cuidado')}', font=('Arial',12,'bold'), text_color='#1E3A8A', fg_color='#F3F4F6').place(x=440,y=550)

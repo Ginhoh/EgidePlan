@@ -24,7 +24,7 @@ def home(frame):
      gastos = ctk.CTkLabel(new_frame, text='1. Adicione seus gastos clicando no botão "Gastos" no menu lateral.',fg_color='#F3F4F6', width=550, anchor='w', font=('arial', 14, 'bold'), wraplength=600, text_color='#3B82F6').place(x=250, y=200)
      dashboard = ctk.CTkLabel(new_frame, text='2. Acompanhe seus gastos e estatísticas no Dashboard.',fg_color='#F3F4F6', width=550, anchor='w', font=('arial', 14, 'bold'), wraplength=600, text_color='#3B82F6').place(x=250, y=250)
 
-     msg = ctk.CTkLabel(new_frame, text=random.choice(sentences),fg_color='#F3F4F6', width=600, justify='center', font=('arial', 16, 'bold'), wraplength=600, text_color='#3B82F6').place(x=200, y=500)
+     msg = ctk.CTkLabel(new_frame, text=random.choice(sentences),fg_color='#1E3A8A', width=500, justify='center', font=('arial', 16, 'bold'), wraplength=450, text_color='#F3F4F6', corner_radius=10).place(x=250, y=500)
 
 #contact frame
 def contact(frame):

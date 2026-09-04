@@ -129,7 +129,7 @@ def comparacao():
 def gastos_por_categoria(month, categoria):
    cursor.execute(f"SELECT SUM(valor) FROM gastos WHERE data LIKE '%/{month}/%' AND categoria = '{categoria}'")
    dados = cursor.fetchall()
-   return 0 if dados[0][0] == None else dados[0][0]
+   return '0.00' if dados[0][0] is None else f"{dados[0][0]:.2f}"
 
 def months_():
     cursor.execute("""SELECT data FROM gastos GROUP BY data""")

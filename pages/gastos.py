@@ -12,7 +12,7 @@ def show_table(position):
         scroll_table = ctk.CTkScrollableFrame(new_frame, width=550, height=400, fg_color='#F3F4F6')
         scroll_table.place(x=230,y=50)
         
-        labelGastos = ctk.CTkLabel(position, justify='center', width=600, text="Confira seus gastos aqui", font=ctk.CTkFont(size=20, weight="bold"), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
+        labelGastos = ctk.CTkLabel(position, justify='center', width=600, text=f"Gastos desse mês", font=ctk.CTkFont(size=20, weight="bold", family='Times New Roman'), fg_color='#F3F4F6', text_color='#1E3A8A').place(x=200,y=10)
 
 
         cursor.execute(f"""SELECT nome, valor, categoria, data FROM gastos WHERE data LIKE '%/{actual_month()}/%'""")
@@ -22,7 +22,7 @@ def show_table(position):
             item_frame = ctk.CTkFrame(scroll_table, fg_color='#F3F4F6')
             item_frame.pack(fill='x', pady=2)
             
-            new_label = ctk.CTkLabel(item_frame, wraplength=450, text=f'{cont}. {valorA}: R${valorB:.2f} | {valorC} | {valorD}', font=ctk.CTkFont(size=14, weight="bold"), fg_color='#F3F4F6', text_color='black', justify ='left')
+            new_label = ctk.CTkLabel(item_frame, wraplength=450, text=f'{cont}. {valorA}: R${valorB:.2f} | {valorC} | {valorD}', font=('Times New Roman', 14), fg_color='#F3F4F6', text_color='black', justify ='left')
             new_label.pack(side='left', padx=(0, 10))
 
             btn_remove = ctk.CTkButton(item_frame, command=lambda idc = cont:remove_gasto(position, idc), width=120, text="Excluir",text_color='#0C447C', fg_color=('#E6F1FB'), hover_color='#3B82F6', border_color='#B5D4F4', border_width=2).pack(side='right', padx=10)
